@@ -358,6 +358,14 @@ const DEFAULTS = {
         "A closed book still remembers its last page."
       ]
     }
+  },
+  number: {
+    label: "Random number",
+    short: "Number",
+    icon: "🎲",
+    isRange: true,
+    defaultMin: 0,
+    defaultMax: 100
   }
 };
 
@@ -588,6 +596,10 @@ function mealPeriod(){
 
 function buildDefaultState(){
   for (const cat of Object.keys(DEFAULTS)){
+    if (DEFAULTS[cat].isRange){
+      state[cat] = { min: DEFAULTS[cat].defaultMin, max: DEFAULTS[cat].defaultMax };
+      continue;
+    }
     const merged = {};
     for (const period of Object.keys(DEFAULTS[cat].items)){
       merged[period] = {};
@@ -607,6 +619,14 @@ async function loadState(){
       saved = JSON.parse(res.value);
     }catch(e){
       saved = null;
+    }
+
+    if (DEFAULTS[cat].isRange){
+      state[cat] = (saved && typeof saved.min === 'number' && typeof saved.max === 'number')
+        ? saved
+        : { min: DEFAULTS[cat].defaultMin, max: DEFAULTS[cat].defaultMax };
+      if (!saved) await saveState(cat);
+      continue;
     }
 
     const merged = {};
@@ -675,9 +695,10 @@ function renderTimeBadge(){
 function renderStage(){
   const stage = document.getElementById('stage');
   const cat = activeCategory();
-  const period = periodForCategory(cat);
-  const pool = state[cat][period] || {};
-  const enabledCount = Object.values(pool).filter(v => v.on).length;
+  const isRange = DEFAULTS[cat].isRange;
+  const period = isRange ? null : periodForCategory(cat);
+  const pool = isRange ? {} : (state[cat][period] || {});
+  const enabledCount = isRange ? 1 : Object.values(pool).filter(v => v.on).length;
 
   stage.innerHTML = '';
 
@@ -730,6 +751,13 @@ function renderStage(){
 
 function pick(){
   const cat = activeCategory();
+  if (DEFAULTS[cat].isRange){
+    const { min, max } = state[cat];
+    current.item = String(min + Math.floor(Math.random() * (max - min + 1)));
+    showingThai = false;
+    renderStage();
+    return;
+  }
   const period = periodForCategory(cat);
   const pool = state[cat][period] || {};
   const entries = Object.entries(pool).filter(([,v]) => v.on);
@@ -776,6 +804,56 @@ function renderSetup(){
   if (!editMode) return;
 
   const cat = activeCategory();
+
+  if (DEFAULTS[cat].isRange){
+    const title = document.createElement('div');
+    title.className = 'section-title';
+    title.textContent = 'Range: ' + state[cat].min + ' – ' + state[cat].max;
+    zone.appendChild(title);
+
+    const wrap = document.createElement('div');
+    wrap.style.display = 'flex';
+    wrap.style.flexDirection = 'column';
+    wrap.style.gap = '14px';
+
+    const startRow = document.createElement('div');
+    startRow.innerHTML = '<div style="font-size:13px;color:var(--sage);margin-bottom:4px;">Start</div>';
+    const startSlider = document.createElement('input');
+    startSlider.type = 'range';
+    startSlider.min = '0';
+    startSlider.max = '100';
+    startSlider.value = state[cat].min;
+    startSlider.style.width = '100%';
+    startRow.appendChild(startSlider);
+    wrap.appendChild(startRow);
+
+    const endRow = document.createElement('div');
+    endRow.innerHTML = '<div style="font-size:13px;color:var(--sage);margin-bottom:4px;">End</div>';
+    const endSlider = document.createElement('input');
+    endSlider.type = 'range';
+    endSlider.min = '0';
+    endSlider.max = '100';
+    endSlider.value = state[cat].max;
+    endSlider.style.width = '100%';
+    endRow.appendChild(endSlider);
+    wrap.appendChild(endRow);
+
+    const commit = async () => {
+      let min = parseInt(startSlider.value, 10);
+      let max = parseInt(endSlider.value, 10);
+      if (min > max) { max = min; endSlider.value = max; }
+      state[cat].min = min;
+      state[cat].max = max;
+      title.textContent = 'Range: ' + min + ' – ' + max;
+      await saveState(cat);
+    };
+    startSlider.oninput = commit;
+    endSlider.oninput = commit;
+
+    zone.appendChild(wrap);
+    return;
+  }
+
   Object.keys(DEFAULTS[cat].items).forEach(period => {
     const title = document.createElement('div');
     title.className = 'section-title';
