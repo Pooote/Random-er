@@ -586,6 +586,19 @@ function mealPeriod(){
   return "dinner";
 }
 
+function buildDefaultState(){
+  for (const cat of Object.keys(DEFAULTS)){
+    const merged = {};
+    for (const period of Object.keys(DEFAULTS[cat].items)){
+      merged[period] = {};
+      DEFAULTS[cat].items[period].forEach(name => {
+        merged[period][name] = { on:true, score:0 };
+      });
+    }
+    state[cat] = merged;
+  }
+}
+
 async function loadState(){
   for (const cat of Object.keys(DEFAULTS)){
     let saved = null;
@@ -821,25 +834,17 @@ document.getElementById('editToggle').onclick = () => {
   renderSetup();
 };
 
+buildDefaultState();
+current.category = 'eat';
+render();
+
 (async () => {
   try{
     await loadState();
+    render();
   }catch(e){
-    console.error('loadState failed, falling back to in-memory defaults', e);
-    // Build state from DEFAULTS directly so the UI still renders without storage.
-    for (const cat of Object.keys(DEFAULTS)){
-      const merged = {};
-      for (const period of Object.keys(DEFAULTS[cat].items)){
-        merged[period] = {};
-        DEFAULTS[cat].items[period].forEach(name => {
-          merged[period][name] = { on:true, score:0 };
-        });
-      }
-      state[cat] = merged;
-    }
+    console.error('loadState failed, staying on in-memory defaults', e);
   }
-  current.category = 'eat';
-  render();
 })();
 </script>
 </body>
