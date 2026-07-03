@@ -5,507 +5,257 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Decide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap%22 rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-
   :root{
-
     --bg: #16342F;
-
     --panel: #1F433C;
-
     --panel-2: #234B43;
-
     --amber: #E8A33D;
-
     --amber-dark: #7A5217;
-
     --coral: #E8664F;
-
     --coral-dark: #7A2C1E;
-
     --cream: #F6F1E4;
-
     --sage: #9AB3A6;
-
     --line: rgba(246,241,228,0.14);
-
   }
-
   *{box-sizing:border-box;}
-
   body{
-
     margin:0;
-
     background: var(--bg);
-
     color: var(--cream);
-
     font-family: 'Inter', sans-serif;
-
     min-height:100vh;
-
     display:flex;
-
     justify-content:center;
-
     padding: 32px 16px 60px;
-
   }
-
   .app{
-
     width:100%;
-
     max-width:420px;
-
   }
-
   h1{
-
     font-family:'Space Grotesk', sans-serif;
-
     font-weight:700;
-
     font-size:28px;
-
     margin: 4px 0 2px;
-
     letter-spacing: -0.5px;
-
   }
-
   .sub{
-
     color: var(--sage);
-
     font-size:14px;
-
     margin: 0 0 24px;
-
   }
-
   .tabs{
-
     display:flex;
-
     flex-wrap:wrap;
-
     gap:8px;
-
     margin-bottom:20px;
-
   }
-
   .tab{
-
     flex: 1 1 21%;
-
     padding:11px 6px;
-
     text-align:center;
-
     background: var(--panel);
-
     border: 1px solid var(--line);
-
     border-radius: 10px;
-
     font-family:'Space Grotesk', sans-serif;
-
     font-weight:500;
-
     font-size:13px;
-
     color: var(--sage);
-
     cursor:pointer;
-
     user-select:none;
-
     transition: transform 0.12s ease, background 0.15s ease, color 0.15s ease;
-
   }
-
   .tab:active{ transform: scale(0.96); }
-
   .tab.active{
-
     background: var(--amber);
-
     color: var(--amber-dark);
-
     border-color: var(--amber);
-
   }
-
   .stage{
-
     background: var(--panel);
-
     border-radius: 16px;
-
     border: 1px solid var(--line);
-
     padding: 28px 20px 24px;
-
     min-height: 260px;
-
     display:flex;
-
     flex-direction:column;
-
     align-items:center;
-
     justify-content:center;
-
     position:relative;
-
     overflow:hidden;
-
   }
-
   .ticket{
-
     width:100%;
-
     background: var(--cream);
-
     color: #26221A;
-
     border-radius: 12px;
-
     padding: 22px 18px 18px;
-
     position:relative;
-
     text-align:center;
-
     animation: drop 0.35s cubic-bezier(.2,.9,.3,1.2);
-
   }
-
   @keyframes drop{
-
     from{ transform: translateY(-18px); opacity:0; }
-
     to{ transform: translateY(0); opacity:1; }
-
   }
-
   .ticket::before, .ticket::after{
-
     content:"";
-
     position:absolute;
-
     width:16px; height:16px;
-
     background: var(--panel);
-
     border-radius:50%;
-
     top:50%;
-
     transform: translateY(-50%);
-
   }
-
   .ticket::before{ left:-8px; }
-
   .ticket::after{ right:-8px; }
-
   .ticket-label{
-
     font-size:11px;
-
     letter-spacing:1.5px;
-
     text-transform:uppercase;
-
     color:#8A8368;
-
     margin:0 0 10px;
-
   }
-
   .ticket-result{
-
     font-family:'Space Grotesk', sans-serif;
-
     font-weight:700;
-
     font-size:24px;
-
     line-height:1.25;
-
     margin:0;
-
   }
-
   .empty-hint{
-
     color: var(--sage);
-
     font-size:14px;
-
     text-align:center;
-
     line-height:1.6;
-
   }
-
   .dial-row{
-
     display:flex;
-
     align-items:center;
-
     justify-content:center;
-
     gap: 18px;
-
     margin-top: 22px;
-
   }
-
   .dial{
-
     width:84px; height:84px;
-
     border-radius:50%;
-
     background: var(--coral);
-
     color: var(--cream);
-
     border:none;
-
     font-family:'Space Grotesk', sans-serif;
-
     font-weight:700;
-
     font-size:14px;
-
     letter-spacing:0.5px;
-
     cursor:pointer;
-
     display:flex;
-
     align-items:center;
-
     justify-content:center;
-
     transition: transform 0.12s ease;
-
   }
-
   .dial:active{ transform: scale(0.92); }
-
   .feedback-row{
-
     display:flex;
-
     gap:10px;
-
     margin-top:16px;
-
     justify-content:center;
-
   }
-
   .fbtn{
-
     width:44px; height:44px;
-
     border-radius:50%;
-
     border:1px solid var(--line);
-
     background: var(--panel-2);
-
     color: var(--cream);
-
     font-size:18px;
-
     cursor:pointer;
-
     display:flex;
-
     align-items:center;
-
     justify-content:center;
-
     transition: transform 0.12s ease, background 0.15s ease;
-
   }
-
   .fbtn:active{ transform: scale(0.9); }
-
   .fbtn.up:hover{ background: #2E5A50; }
-
   .fbtn.down:hover{ background: #5A2E2E; }
-
   .fbtn.th{
-
     width:auto;
-
     padding: 0 14px;
-
     border-radius: 22px;
-
     font-family:'Space Grotesk', sans-serif;
-
     font-weight:500;
-
     font-size:13px;
-
     background: rgba(232,163,61,0.14);
-
     border-color: var(--amber);
-
     color: var(--amber);
-
   }
-
   .section-title{
-
     font-family:'Space Grotesk', sans-serif;
-
     font-weight:500;
-
     font-size:15px;
-
     margin: 26px 0 10px;
-
     color: var(--sage);
-
   }
-
   .chip-grid{
-
     display:flex;
-
     flex-wrap:wrap;
-
     gap:8px;
-
   }
-
   .chip{
-
     padding:9px 14px;
-
     border-radius:20px;
-
     border:1px solid var(--line);
-
     background: var(--panel);
-
     color: var(--sage);
-
     font-size:13.5px;
-
     cursor:pointer;
-
     user-select:none;
-
     transition: all 0.15s ease;
-
   }
-
   .chip.on{
-
     background: rgba(232,163,61,0.16);
-
     border-color: var(--amber);
-
     color: var(--amber);
-
   }
-
   .chip:active{ transform: scale(0.95); }
-
   .add-row{
-
     display:flex;
-
     gap:8px;
-
     margin-top:12px;
-
   }
-
   .add-row input{
-
     flex:1;
-
     background: var(--panel);
-
     border: 1px solid var(--line);
-
     border-radius:10px;
-
     padding:10px 12px;
-
     color: var(--cream);
-
     font-size:14px;
-
     font-family:'Inter', sans-serif;
-
   }
-
   .add-row input::placeholder{ color: #5C7A6E; }
-
   .add-row button{
-
     background: var(--panel-2);
-
     border: 1px solid var(--line);
-
     color: var(--cream);
-
     border-radius:10px;
-
     padding: 0 16px;
-
     font-size:14px;
-
     cursor:pointer;
-
   }
-
   .footer-link{
-
     text-align:center;
-
     margin-top:24px;
-
     font-size:13px;
-
     color: var(--sage);
-
     cursor:pointer;
-
     text-decoration: underline;
-
     text-underline-offset:3px;
-
   }
-
   .badge-time{
-
     font-size:12px;
-
     color: var(--sage);
-
     text-align:center;
-
     margin: -8px 0 18px;
-
   }
 </style>
 </head>
@@ -513,1045 +263,584 @@
 <div class="app">
 <h1>Decide</h1>
 <p class="sub">Tap the dial. Stop deciding what's for dinner.</p>
- 
+
   <div class="tabs" id="tabs"></div>
 <div class="badge-time" id="timeBadge"></div>
- 
+
   <div class="stage" id="stage"></div>
- 
+
   <div id="setupZone"></div>
- 
+
   <div class="footer-link" id="editToggle">Edit my options</div>
 </div>
- 
+
 <script>
-
 const DEFAULTS = {
-
   eat: {
-
     label: "What to eat",
-
     icon: "🍽",
-
     items: {
-
       breakfast: ["Khao tom (Thai rice soup)","Jok (Thai rice porridge with pork)","Khai jiao with rice (Thai omelette)","Onigiri from combini","Tamagoyaki and rice","Miso soup and rice","Natto and rice","Patongo with soy milk","Sticky rice with grilled pork","Congee with century egg","Steamed bun from combini","Toast with jam","Sandwich from combini","Instant tom yum noodles","Fried egg with prik nam pla and rice","Yogurt with fruit","Mango sticky rice (in season)","Khao pad kai (fried rice with egg)","Rice with fish sauce and fried egg","Quick coffee and toast"],
-
       lunch: ["Pad kra pao with rice","Khao man gai","Tom yum soup with rice","Som tam","Pad thai","Larb moo","Green curry with rice","Massaman curry","Thai fried rice","Panang curry","Yakisoba","Katsu curry rice","Oyakodon","Onigiri bento from combini","Udon noodle soup","Ramen","Bibimbap","Kimchi fried rice","Gyoza soup","Sushi bento from supermarket","Fried rice with Chinese sausage","Instant Thai noodles with extra toppings","Gapao rice from a Thai restaurant","Cold soba","Vegetable stir fry with rice"],
-
       dinner: ["Tom yum kung","Green curry chicken","Pad kra pao moo with fried egg","Larb gai","Massaman beef curry","Panang curry with rice","Thai basil fried rice","Sukiyaki","Shabu shabu","Yakiniku","Teriyaki chicken","Miso soup with grilled fish","Hot pot with jaew dip","Nabe hotpot","Kor moo yang (grilled pork neck)","Tofu and vegetable stir fry","Fried rice with nam prik pao","Homemade gyoza","Japanese curry rice","Spicy Thai omelette with rice","Kimchi jjigae","Grilled fish with Thai dipping sauce","Pla neung manao (steamed fish with lime)","Oven-baked Thai chicken wings","Order Thai food delivery"]
-
     }
-
   },
-
   do: {
-
     label: "What to do",
-
     icon: "✦",
-
     items: {
-
       any: ["Go for a walk","Read for 20 minutes","Call a friend or family back home","Tidy one room","Watch something new","Stretch or light workout","Cook a new dish","Journal for 5 minutes","Take a short nap","Listen to a new playlist","Sit outside for a bit","Declutter one drawer","Sketch or doodle something","Learn 5 Japanese words","Write a letter you won't send","Explore a new street nearby","Take photos of something ordinary","Do nothing for 10 minutes","Look up a new Thai restaurant nearby","Reorganize your phone's home screen","Water the plants","Try a new stretch or yoga pose","Message someone you've been meaning to","Clean your desk","Visit a convenience store you've never tried","Take the train one stop further and walk back","Organize old photos on your phone","Practice an instrument","Write three things you're grateful for","Try cooking a Japanese dish you've never made","Find a new onsen or bath spot to try","Fix one small broken thing at home","Make a new playlist","Try a 5 minute meditation","Learn a new phrase in Japanese","Reply to a message you've been putting off","Watch the sunset from somewhere new","Try a cold shower","Give away something you no longer need","Plan a small trip around Japan"]
-
     }
-
   },
-
   work: {
-
     label: "Focus check",
-
     short: "Focus",
-
     icon: "◐",
-
     items: {
-
       any: ["Keep doing","Go rest","Up to feeling","Quit for now","Switch tasks","Take a 5 min break","Push for 20 more minutes","Step outside briefly","Do the easy task first","Ask for help","Close the laptop","Water break, then reassess","Stand up and stretch","Change your environment","Set a 10 minute timer and push","Do one small win first","Let it sit, come back later","Talk it through with someone","Break the task into smaller pieces","Take a proper lunch break","Reprioritize your list","Do the boring part now","Trust the plan you made earlier","Table it for tomorrow","Push through the discomfort","Take five deep breaths, then continue","Switch to a lower-stakes task","Review what you've done so far","Set a hard stop time","Do 10 more minutes, no more","Delegate if you can","Check if it's urgent or just loud","Silence notifications and refocus","Take a short walk, then decide","Write down where you left off","Let momentum carry you a bit longer","Change the task, not the day","Say no to one more thing today","Finish just this one piece","Rest without guilt","Ask if this even needs doing today","Do it badly, just get it done","Take the win and stop here","Give it 5 more minutes, then stop","Trust your gut on this one","Sleep on it","Ask what future you would want","Do the thing you're avoiding first","Keep it simple, don't overthink","Just start, momentum will follow"]
-
     }
-
   },
-
   quote: {
-
     label: "Random quote",
-
     short: "Quote",
-
     icon: "❝",
-
     items: {
-
       any: [
-
         "The door was never locked.",
-
         "Somewhere, a kettle is just starting to boil.",
-
         "Not every root needs to be seen to hold the tree up.",
-
         "The map was folded wrong, but it still got you here.",
-
         "A quiet room says more than it lets on.",
-
         "The second draft is where the truth hides.",
-
         "Some tools rust from disuse, not overuse.",
-
         "You already know which way the wind is blowing.",
-
         "The longest way round is sometimes the shortest way home.",
-
         "A held breath still counts as breathing.",
-
         "The lamp doesn't ask why the moth returns.",
-
         "What you postpone, you slowly redefine.",
-
         "The empty chair is still part of the table.",
-
         "Even a still pond remembers the last stone.",
-
         "Nobody notices the hinge until the door sticks.",
-
         "The path was there before you decided to see it.",
-
         "A closed hand can't catch what's thrown to it.",
-
         "The clock doesn't rush, it just doesn't wait either.",
-
         "Some silence is a sentence, not an absence.",
-
         "The unlit side of the candle still holds wax.",
-
         "A window left open lets in more than air.",
-
         "The seed doesn't argue with the season.",
-
         "Some doors close quietly so you don't notice leaving.",
-
         "The river doesn't remember the shape of the glass.",
-
         "What's folded can still be read.",
-
         "A shadow is just proof the light tried.",
-
         "The compass points north, not home.",
-
         "Some weight is easier to carry than to name.",
-
         "The echo answers before you finish asking.",
-
         "A locked box can still be light.",
-
         "The bridge doesn't care which side you started on.",
-
         "Some silence has already made its decision.",
-
         "The match doesn't choose what it burns.",
-
         "A borrowed umbrella still keeps you dry.",
-
         "The last page doesn't undo the first.",
-
         "What you water tends to grow, wanted or not.",
-
         "The tide doesn't ask permission to return.",
-
         "A cracked cup still holds most of the tea.",
-
         "The mirror only shows what's already there.",
-
         "Some roads were never meant to be finished.",
-
         "The knot remembers being a straight line.",
-
         "A quiet phone can still be heavy.",
-
         "The moon doesn't compete with the sun, only follows a different hour.",
-
         "What's left unsaid still takes up a chair.",
-
         "The stairs don't care how tired you feel today.",
-
         "A candle burns the same whether watched or not.",
-
         "The map is not the walk.",
-
         "Some questions are answered by simply waiting.",
-
         "The frost doesn't warn the flower, it just arrives.",
-
         "A closed book still remembers its last page."
-
       ]
-
     }
-
   }
-
 };
- 
+
 const TH = {
-
   "Khao tom (Thai rice soup)": "ข้าวต้ม",
-
   "Jok (Thai rice porridge with pork)": "โจ๊กหมู",
-
   "Khai jiao with rice (Thai omelette)": "ข้าวไข่เจียว",
-
   "Onigiri from combini": "โอนิกิริจากร้านสะดวกซื้อ",
-
   "Tamagoyaki and rice": "ทามาโกยากิกับข้าว",
-
   "Miso soup and rice": "ซุปมิโสะกับข้าว",
-
   "Natto and rice": "นัตโตะกับข้าว",
-
   "Patongo with soy milk": "ปาท่องโก๋กับนมถั่วเหลือง",
-
   "Sticky rice with grilled pork": "ข้าวเหนียวหมูปิ้ง",
-
   "Congee with century egg": "โจ๊กไข่เยี่ยวม้า",
-
   "Steamed bun from combini": "ซาลาเปาจากร้านสะดวกซื้อ",
-
   "Toast with jam": "ขนมปังปิ้งทาแยม",
-
   "Sandwich from combini": "แซนด์วิชจากร้านสะดวกซื้อ",
-
   "Instant tom yum noodles": "บะหมี่ต้มยำกึ่งสำเร็จรูป",
-
   "Fried egg with prik nam pla and rice": "ข้าวไข่ดาวราดพริกน้ำปลา",
-
   "Yogurt with fruit": "โยเกิร์ตกับผลไม้",
-
   "Mango sticky rice (in season)": "ข้าวเหนียวมะม่วง",
-
   "Khao pad kai (fried rice with egg)": "ข้าวผัดไข่",
-
   "Rice with fish sauce and fried egg": "ข้าวราดไข่ดาวน้ำปลาพริก",
-
   "Quick coffee and toast": "กาแฟกับขนมปังปิ้งแบบง่ายๆ",
-
   "Pad kra pao with rice": "ผัดกะเพราราดข้าว",
-
   "Khao man gai": "ข้าวมันไก่",
-
   "Tom yum soup with rice": "ต้มยำกับข้าว",
-
   "Som tam": "ส้มตำ",
-
   "Pad thai": "ผัดไทย",
-
   "Larb moo": "ลาบหมู",
-
   "Green curry with rice": "แกงเขียวหวานราดข้าว",
-
   "Massaman curry": "แกงมัสมั่น",
-
   "Thai fried rice": "ข้าวผัด",
-
   "Panang curry": "พะแนง",
-
   "Yakisoba": "ยากิโซบะ",
-
   "Katsu curry rice": "ข้าวแกงกะหรี่คัตสึ",
-
   "Oyakodon": "โอยาโกะด้ง",
-
   "Onigiri bento from combini": "เบนโตะโอนิกิริจากร้านสะดวกซื้อ",
-
   "Udon noodle soup": "อุด้งน้ำ",
-
   "Ramen": "ราเมง",
-
   "Bibimbap": "บิบิมบับ",
-
   "Kimchi fried rice": "ข้าวผัดกิมจิ",
-
   "Gyoza soup": "ซุปเกี๊ยวซ่า",
-
   "Sushi bento from supermarket": "เบนโตะซูชิจากซูเปอร์มาร์เก็ต",
-
   "Fried rice with Chinese sausage": "ข้าวผัดกุนเชียง",
-
   "Instant Thai noodles with extra toppings": "มาม่าใส่ท็อปปิ้งเพิ่ม",
-
   "Gapao rice from a Thai restaurant": "ข้าวกะเพราจากร้านอาหารไทย",
-
   "Cold soba": "โซบะเย็น",
-
   "Vegetable stir fry with rice": "ผัดผักราดข้าว",
-
   "Tom yum kung": "ต้มยำกุ้ง",
-
   "Green curry chicken": "แกงเขียวหวานไก่",
-
   "Pad kra pao moo with fried egg": "กะเพราหมูไข่ดาว",
-
   "Larb gai": "ลาบไก่",
-
   "Massaman beef curry": "มัสมั่นเนื้อ",
-
   "Panang curry with rice": "พะแนงราดข้าว",
-
   "Thai basil fried rice": "ข้าวผัดกะเพรา",
-
   "Sukiyaki": "สุกี้ยากี้",
-
   "Shabu shabu": "ชาบูชาบู",
-
   "Yakiniku": "ยากินิกุ",
-
   "Teriyaki chicken": "ไก่เทริยากิ",
-
   "Miso soup with grilled fish": "ซุปมิโสะกับปลาย่าง",
-
   "Hot pot with jaew dip": "หม้อไฟกับแจ่ว",
-
   "Nabe hotpot": "นาเบะ",
-
   "Kor moo yang (grilled pork neck)": "คอหมูย่าง",
-
   "Tofu and vegetable stir fry": "ผัดเต้าหู้ผัก",
-
   "Fried rice with nam prik pao": "ข้าวผัดน้ำพริกเผา",
-
   "Homemade gyoza": "เกี๊ยวซ่าทำเอง",
-
   "Japanese curry rice": "ข้าวแกงกะหรี่ญี่ปุ่น",
-
   "Spicy Thai omelette with rice": "ข้าวไข่เจียวรสจัด",
-
   "Kimchi jjigae": "คิมจิจิเก",
-
   "Grilled fish with Thai dipping sauce": "ปลาย่างจิ้มน้ำจิ้มไทย",
-
   "Pla neung manao (steamed fish with lime)": "ปลานึ่งมะนาว",
-
   "Oven-baked Thai chicken wings": "ปีกไก่อบสไตล์ไทย",
-
   "Order Thai food delivery": "สั่งอาหารไทยเดลิเวอรี่",
-
   "Go for a walk": "ออกไปเดินเล่น",
-
   "Read for 20 minutes": "อ่านหนังสือ 20 นาที",
-
   "Call a friend or family back home": "โทรหาเพื่อนหรือครอบครัวที่บ้าน",
-
   "Tidy one room": "จัดห้องหนึ่งห้องให้เรียบร้อย",
-
   "Watch something new": "ดูอะไรใหม่ๆ",
-
   "Stretch or light workout": "ยืดเส้นยืดสายหรือออกกำลังกายเบาๆ",
-
   "Cook a new dish": "ลองทำอาหารจานใหม่",
-
   "Journal for 5 minutes": "เขียนบันทึก 5 นาที",
-
   "Take a short nap": "งีบสั้นๆ",
-
   "Listen to a new playlist": "ฟังเพลย์ลิสต์ใหม่",
-
   "Sit outside for a bit": "นั่งเล่นข้างนอกสักพัก",
-
   "Declutter one drawer": "จัดลิ้นชักหนึ่งอัน",
-
   "Sketch or doodle something": "วาดรูปหรือขีดเขียนอะไรบางอย่าง",
-
   "Learn 5 Japanese words": "เรียนคำศัพท์ญี่ปุ่น 5 คำ",
-
   "Write a letter you won't send": "เขียนจดหมายที่ไม่ต้องส่ง",
-
   "Explore a new street nearby": "เดินสำรวจถนนใหม่ใกล้บ้าน",
-
   "Take photos of something ordinary": "ถ่ายรูปสิ่งของธรรมดารอบตัว",
-
   "Do nothing for 10 minutes": "ไม่ทำอะไรเลย 10 นาที",
-
   "Look up a new Thai restaurant nearby": "หาร้านอาหารไทยใหม่แถวบ้าน",
-
   "Reorganize your phone's home screen": "จัดหน้าจอมือถือใหม่",
-
   "Water the plants": "รดน้ำต้นไม้",
-
   "Try a new stretch or yoga pose": "ลองท่ายืดหรือโยคะใหม่",
-
   "Message someone you've been meaning to": "ทักหาคนที่ตั้งใจจะทักมานาน",
-
   "Clean your desk": "ทำความสะอาดโต๊ะทำงาน",
-
   "Visit a convenience store you've never tried": "ลองไปร้านสะดวกซื้อที่ไม่เคยไป",
-
   "Take the train one stop further and walk back": "นั่งรถไฟเลยป้ายไปหนึ่งป้ายแล้วเดินกลับ",
-
   "Organize old photos on your phone": "จัดรูปเก่าในมือถือ",
-
   "Practice an instrument": "ฝึกเล่นดนตรี",
-
   "Write three things you're grateful for": "เขียนสามสิ่งที่รู้สึกขอบคุณ",
-
   "Try cooking a Japanese dish you've never made": "ลองทำอาหารญี่ปุ่นที่ไม่เคยทำ",
-
   "Find a new onsen or bath spot to try": "หาออนเซ็นหรือที่อาบน้ำแห่งใหม่",
-
   "Fix one small broken thing at home": "ซ่อมของเล็กๆ ที่พังในบ้าน",
-
   "Make a new playlist": "ทำเพลย์ลิสต์ใหม่",
-
   "Try a 5 minute meditation": "ลองนั่งสมาธิ 5 นาที",
-
   "Learn a new phrase in Japanese": "เรียนรู้คำพูดใหม่เป็นภาษาญี่ปุ่น",
-
   "Reply to a message you've been putting off": "ตอบข้อความที่ค้างไว้",
-
   "Watch the sunset from somewhere new": "ดูพระอาทิตย์ตกจากที่ใหม่",
-
   "Try a cold shower": "อาบน้ำเย็น",
-
   "Give away something you no longer need": "ให้ของที่ไม่ใช้แล้วกับคนอื่น",
-
   "Plan a small trip around Japan": "วางแผนทริปเล็กๆ ในญี่ปุ่น",
-
   "Keep doing": "ทำต่อไป",
-
   "Go rest": "ไปพักผ่อน",
-
   "Up to feeling": "แล้วแต่ความรู้สึก",
-
   "Quit for now": "หยุดไว้ก่อน",
-
   "Switch tasks": "เปลี่ยนไปทำงานอื่น",
-
   "Take a 5 min break": "พัก 5 นาที",
-
   "Push for 20 more minutes": "ฝืนทำต่ออีก 20 นาที",
-
   "Step outside briefly": "ออกไปข้างนอกสักครู่",
-
   "Do the easy task first": "ทำงานง่ายๆ ก่อน",
-
   "Ask for help": "ขอความช่วยเหลือ",
-
   "Close the laptop": "ปิดแล็ปท็อป",
-
   "Water break, then reassess": "ดื่มน้ำแล้วค่อยประเมินใหม่",
-
   "Stand up and stretch": "ลุกขึ้นยืดเส้นยืดสาย",
-
   "Change your environment": "เปลี่ยนสภาพแวดล้อม",
-
   "Set a 10 minute timer and push": "ตั้งเวลา 10 นาทีแล้วลุยต่อ",
-
   "Do one small win first": "ทำสิ่งเล็กๆ ให้สำเร็จก่อน",
-
   "Let it sit, come back later": "พักไว้ก่อน แล้วค่อยกลับมาทำ",
-
   "Talk it through with someone": "คุยกับใครสักคนดู",
-
   "Break the task into smaller pieces": "แบ่งงานเป็นชิ้นเล็กๆ",
-
   "Take a proper lunch break": "พักกินข้าวเที่ยงจริงๆ จังๆ",
-
   "Reprioritize your list": "จัดลำดับความสำคัญใหม่",
-
   "Do the boring part now": "ทำส่วนที่น่าเบื่อตอนนี้เลย",
-
   "Trust the plan you made earlier": "เชื่อแผนที่วางไว้ก่อนหน้านี้",
-
   "Table it for tomorrow": "พักไว้ทำพรุ่งนี้",
-
   "Push through the discomfort": "ฝืนความอึดอัดไปก่อน",
-
   "Take five deep breaths, then continue": "หายใจลึกๆ ห้าครั้งแล้วทำต่อ",
-
   "Switch to a lower-stakes task": "เปลี่ยนไปทำงานที่กดดันน้อยกว่า",
-
   "Review what you've done so far": "ทบทวนสิ่งที่ทำมาแล้ว",
-
   "Set a hard stop time": "ตั้งเวลาหยุดที่ชัดเจน",
-
   "Do 10 more minutes, no more": "ทำต่ออีกแค่ 10 นาที",
-
   "Delegate if you can": "มอบหมายให้คนอื่นถ้าทำได้",
-
   "Check if it's urgent or just loud": "เช็กว่ามันเร่งด่วนจริงหรือแค่ดูเร่งด่วน",
-
   "Silence notifications and refocus": "ปิดการแจ้งเตือนแล้วโฟกัสใหม่",
-
   "Take a short walk, then decide": "เดินเล่นสั้นๆ แล้วค่อยตัดสินใจ",
-
   "Write down where you left off": "จดไว้ว่าทำค้างไว้ตรงไหน",
-
   "Let momentum carry you a bit longer": "ปล่อยให้จังหวะพาไปอีกนิด",
-
   "Change the task, not the day": "เปลี่ยนงาน ไม่ใช่เปลี่ยนทั้งวัน",
-
   "Say no to one more thing today": "ปฏิเสธอีกสักเรื่องวันนี้",
-
   "Finish just this one piece": "ทำให้เสร็จแค่ส่วนนี้ส่วนเดียว",
-
   "Rest without guilt": "พักผ่อนโดยไม่ต้องรู้สึกผิด",
-
   "Ask if this even needs doing today": "ถามตัวเองว่าจำเป็นต้องทำวันนี้ไหม",
-
   "Do it badly, just get it done": "ทำให้เสร็จแม้จะไม่สมบูรณ์แบบ",
-
   "Take the win and stop here": "พอใจกับที่ทำได้แล้วหยุดตรงนี้",
-
   "Give it 5 more minutes, then stop": "ให้เวลาอีก 5 นาทีแล้วหยุด",
-
   "Trust your gut on this one": "เชื่อสัญชาตญาณตัวเองเรื่องนี้",
-
   "Sleep on it": "นอนคิดดูก่อน",
-
   "Ask what future you would want": "ลองถามว่าตัวเองในอนาคตอยากให้ทำอะไร",
-
   "Do the thing you're avoiding first": "ทำสิ่งที่เลี่ยงอยู่ก่อนเลย",
-
   "Keep it simple, don't overthink": "ทำให้เรียบง่าย อย่าคิดมาก",
-
   "Just start, momentum will follow": "แค่เริ่มลงมือ จังหวะจะตามมาเอง",
-
   "The door was never locked.": "ประตูไม่เคยถูกล็อกเลย",
-
   "Somewhere, a kettle is just starting to boil.": "ที่ไหนสักแห่ง กาน้ำเพิ่งเริ่มเดือด",
-
   "Not every root needs to be seen to hold the tree up.": "ไม่ใช่ทุกรากที่ต้องมองเห็นถึงจะค้ำต้นไม้ไว้ได้",
-
   "The map was folded wrong, but it still got you here.": "แผนที่พับผิด แต่ก็ยังพาคุณมาถึงที่นี่ได้",
-
   "A quiet room says more than it lets on.": "ห้องที่เงียบบอกอะไรมากกว่าที่มันแสดงออก",
-
   "The second draft is where the truth hides.": "ฉบับร่างที่สองคือที่ซ่อนของความจริง",
-
   "Some tools rust from disuse, not overuse.": "เครื่องมือบางอย่างเป็นสนิมเพราะไม่ได้ใช้ ไม่ใช่เพราะใช้มากไป",
-
   "You already know which way the wind is blowing.": "คุณรู้อยู่แล้วว่าลมพัดไปทางไหน",
-
   "The longest way round is sometimes the shortest way home.": "บางทีทางอ้อมที่ไกลที่สุด ก็เป็นทางที่สั้นที่สุดกลับบ้าน",
-
   "A held breath still counts as breathing.": "ลมหายใจที่กลั้นไว้ก็ยังนับเป็นการหายใจ",
-
   "The lamp doesn't ask why the moth returns.": "โคมไฟไม่เคยถามว่าทำไมผีเสื้อกลางคืนถึงกลับมา",
-
   "What you postpone, you slowly redefine.": "สิ่งที่คุณเลื่อนออกไป กำลังค่อยๆ เปลี่ยนความหมายของมัน",
-
   "The empty chair is still part of the table.": "เก้าอี้ว่างก็ยังเป็นส่วนหนึ่งของโต๊ะ",
-
   "Even a still pond remembers the last stone.": "แม้แต่บ่อน้ำนิ่งก็ยังจำก้อนหินก้อนสุดท้ายได้",
-
   "Nobody notices the hinge until the door sticks.": "ไม่มีใครสังเกตบานพับ จนกว่าประตูจะฝืด",
-
   "The path was there before you decided to see it.": "ทางเดินมันอยู่ตรงนั้นก่อนที่คุณจะตัดสินใจมองเห็นมัน",
-
   "A closed hand can't catch what's thrown to it.": "มือที่กำแน่นรับสิ่งที่โยนมาไม่ได้",
-
   "The clock doesn't rush, it just doesn't wait either.": "นาฬิกาไม่เคยเร่งรีบ แต่ก็ไม่เคยรอเช่นกัน",
-
   "Some silence is a sentence, not an absence.": "ความเงียบบางแบบคือคำพูด ไม่ใช่การไม่มีอะไรเลย",
-
   "The unlit side of the candle still holds wax.": "ด้านที่ยังไม่ติดไฟของเทียนก็ยังมีขี้ผึ้งอยู่",
-
   "A window left open lets in more than air.": "หน้าต่างที่เปิดทิ้งไว้ ให้เข้ามามากกว่าแค่อากาศ",
-
   "The seed doesn't argue with the season.": "เมล็ดพันธุ์ไม่เคยเถียงกับฤดูกาล",
-
   "Some doors close quietly so you don't notice leaving.": "บางประตูปิดเงียบๆ จนคุณไม่ทันสังเกตว่าได้จากมาแล้ว",
-
   "The river doesn't remember the shape of the glass.": "แม่น้ำไม่เคยจำรูปทรงของแก้วที่เคยตักมันไป",
-
   "What's folded can still be read.": "สิ่งที่ถูกพับไว้ก็ยังอ่านได้",
-
   "A shadow is just proof the light tried.": "เงาคือหลักฐานว่าแสงได้พยายามแล้ว",
-
   "The compass points north, not home.": "เข็มทิศชี้ไปทางเหนือ ไม่ใช่ทางบ้าน",
-
   "Some weight is easier to carry than to name.": "บางภาระแบกง่ายกว่าจะเรียกชื่อมันออกมา",
-
   "The echo answers before you finish asking.": "เสียงสะท้อนตอบกลับมาก่อนที่คุณจะถามจบ",
-
   "A locked box can still be light.": "กล่องที่ล็อกไว้ก็ยังเบาได้",
-
   "The bridge doesn't care which side you started on.": "สะพานไม่สนใจหรอกว่าคุณเริ่มจากฝั่งไหน",
-
   "Some silence has already made its decision.": "ความเงียบบางครั้งตัดสินใจไปแล้วล่วงหน้า",
-
   "The match doesn't choose what it burns.": "ไม้ขีดไฟไม่เคยเลือกว่าจะเผาอะไร",
-
   "A borrowed umbrella still keeps you dry.": "ร่มที่ยืมมาก็ยังกันฝนให้แห้งได้",
-
   "The last page doesn't undo the first.": "หน้าสุดท้ายไม่เคยลบล้างหน้าแรก",
-
   "What you water tends to grow, wanted or not.": "สิ่งที่คุณรดน้ำมักจะเติบโต ไม่ว่าคุณจะต้องการหรือไม่",
-
   "The tide doesn't ask permission to return.": "กระแสน้ำไม่เคยขออนุญาตก่อนจะกลับมา",
-
   "A cracked cup still holds most of the tea.": "แก้วที่ร้าวก็ยังเก็บชาไว้ได้เกือบหมด",
-
   "The mirror only shows what's already there.": "กระจกแสดงแค่สิ่งที่มีอยู่แล้วเท่านั้น",
-
   "Some roads were never meant to be finished.": "บางถนนไม่เคยถูกสร้างมาให้เสร็จสมบูรณ์",
-
   "The knot remembers being a straight line.": "ปมเชือกยังจำได้ว่าครั้งหนึ่งมันเคยเป็นเส้นตรง",
-
   "A quiet phone can still be heavy.": "โทรศัพท์ที่เงียบก็ยังหนักได้",
-
   "The moon doesn't compete with the sun, only follows a different hour.": "ดวงจันทร์ไม่เคยแข่งกับดวงอาทิตย์ แค่ทำหน้าที่ในเวลาที่ต่างกัน",
-
   "What's left unsaid still takes up a chair.": "สิ่งที่ไม่ได้พูดออกมาก็ยังนั่งอยู่บนเก้าอี้ตัวนั้น",
-
   "The stairs don't care how tired you feel today.": "บันไดไม่เคยสนใจว่าวันนี้คุณเหนื่อยแค่ไหน",
-
   "A candle burns the same whether watched or not.": "เทียนเผาไหม้เหมือนเดิม ไม่ว่าจะมีใครมองอยู่หรือไม่",
-
   "The map is not the walk.": "แผนที่ไม่ใช่การเดินทาง",
-
   "Some questions are answered by simply waiting.": "บางคำถามตอบได้แค่ด้วยการรอคอย",
-
   "The frost doesn't warn the flower, it just arrives.": "น้ำค้างแข็งไม่เคยเตือนดอกไม้ล่วงหน้า มันแค่มาถึง",
-
   "A closed book still remembers its last page.": "หนังสือที่ปิดอยู่ก็ยังจำหน้าสุดท้ายของมันได้"
-
 };
- 
+
 let state = { eat:{}, do:{}, work:{}, quote:{} };
-
 let current = { category:null, item:null };
-
 let editMode = false;
-
 let showingThai = false;
- 
+
 function mealPeriod(){
-
   const h = new Date().getHours();
-
   if (h < 11) return "breakfast";
-
   if (h < 16) return "lunch";
-
   return "dinner";
-
 }
- 
+
 async function loadState(){
-
   for (const cat of Object.keys(DEFAULTS)){
-
     let saved = null;
-
     try{
-
       const res = await window.storage.get('decide:' + cat);
-
       saved = JSON.parse(res.value);
-
     }catch(e){
-
       saved = null;
-
     }
- 
+
     const merged = {};
-
     let changed = false;
-
     for (const period of Object.keys(DEFAULTS[cat].items)){
-
       merged[period] = (saved && saved[period]) ? saved[period] : {};
-
       DEFAULTS[cat].items[period].forEach(name => {
-
         if (!merged[period][name]){
-
           merged[period][name] = { on:true, score:0 };
-
           changed = true;
-
         }
-
       });
-
     }
-
     state[cat] = merged;
-
     if (!saved || changed){
-
       await saveState(cat);
-
     }
-
   }
-
 }
- 
+
 async function saveState(cat){
-
-  await window.storage.set('decide:' + cat, JSON.stringify(state[cat]));
-
+  // Never let a storage failure (offline, storage unavailable, quota, etc.)
+  // break the caller — init/render must proceed regardless.
+  try{
+    const result = await window.storage.set('decide:' + cat, JSON.stringify(state[cat]));
+    if (!result){
+      console.error('Storage save returned no result for', cat);
+    }
+  }catch(e){
+    console.error('Storage save failed for', cat, e);
+  }
 }
- 
+
 function activeCategory(){
-
   return current.category || 'eat';
-
 }
- 
+
 function periodForCategory(cat){
-
   if (cat === 'eat') return mealPeriod();
-
   return 'any';
-
 }
- 
+
 function renderTabs(){
-
   const tabs = document.getElementById('tabs');
-
   tabs.innerHTML = '';
-
   Object.keys(DEFAULTS).forEach(cat => {
-
     const el = document.createElement('div');
-
     el.className = 'tab' + (activeCategory() === cat ? ' active' : '');
-
     const shortLabel = DEFAULTS[cat].short || DEFAULTS[cat].label.replace('What to ','');
-
     el.textContent = DEFAULTS[cat].icon + '  ' + shortLabel;
-
     el.onclick = () => { current.category = cat; current.item = null; render(); };
-
     tabs.appendChild(el);
-
   });
-
 }
- 
+
 function renderTimeBadge(){
-
   const badge = document.getElementById('timeBadge');
-
   if (activeCategory() === 'eat'){
-
     const p = mealPeriod();
-
     badge.textContent = "Reading the clock — it's " + p + " time";
-
   } else {
-
     badge.textContent = '';
-
   }
-
 }
- 
+
 function renderStage(){
-
   const stage = document.getElementById('stage');
-
   const cat = activeCategory();
-
   const period = periodForCategory(cat);
-
   const pool = state[cat][period] || {};
-
   const enabledCount = Object.values(pool).filter(v => v.on).length;
- 
+
   stage.innerHTML = '';
- 
+
   if (enabledCount === 0){
-
     const hint = document.createElement('div');
-
     hint.className = 'empty-hint';
-
     hint.innerHTML = 'No options turned on for this yet.<br>Tap "Edit my options" below to pick a few.';
-
     stage.appendChild(hint);
-
     return;
-
   }
- 
+
   if (current.item){
-
     const ticket = document.createElement('div');
-
     ticket.className = 'ticket';
-
     const hasTranslation = !!TH[current.item];
-
     const displayText = (showingThai && hasTranslation) ? TH[current.item] : current.item;
-
     ticket.innerHTML = '<p class="ticket-label">' + DEFAULTS[cat].label + '</p><p class="ticket-result">' + displayText + '</p>';
-
     stage.appendChild(ticket);
- 
+
     const fb = document.createElement('div');
-
     fb.className = 'feedback-row';
-
     fb.innerHTML = `<div class="fbtn th" title="Translate to Thai">TH</div>`;
-
     fb.children[0].onclick = () => toggleTranslate();
-
     stage.appendChild(fb);
- 
+
     const row = document.createElement('div');
-
     row.className = 'dial-row';
-
     const dial = document.createElement('button');
-
     dial.className = 'dial';
-
     dial.textContent = 'AGAIN';
-
     dial.onclick = () => pick();
-
     row.appendChild(dial);
-
     stage.appendChild(row);
-
   } else {
-
     const hint = document.createElement('div');
-
     hint.className = 'empty-hint';
-
     hint.textContent = 'Tap the dial for a suggestion.';
-
     stage.appendChild(hint);
- 
+
     const row = document.createElement('div');
-
     row.className = 'dial-row';
-
     const dial = document.createElement('button');
-
     dial.className = 'dial';
-
     dial.textContent = 'DECIDE';
-
     dial.onclick = () => pick();
-
     row.appendChild(dial);
-
     stage.appendChild(row);
-
   }
-
 }
- 
+
 function pick(){
-
   const cat = activeCategory();
-
   const period = periodForCategory(cat);
-
   const pool = state[cat][period] || {};
-
   const entries = Object.entries(pool).filter(([,v]) => v.on);
-
   if (entries.length === 0) return;
- 
+
   const weighted = [];
-
   entries.forEach(([name, v]) => {
-
     const weight = Math.max(1, 3 + v.score);
-
     for (let i=0;i<weight;i++) weighted.push(name);
-
   });
-
   const choice = weighted[Math.floor(Math.random()*weighted.length)];
-
   current.item = choice;
-
   showingThai = false;
-
   renderStage();
-
 }
- 
+
 function toggleTranslate(){
-
   if (!TH[current.item]){
-
     const badge = document.getElementById('timeBadge');
-
     const original = badge.textContent;
-
     badge.textContent = "No Thai translation saved for this one yet";
-
     setTimeout(() => { badge.textContent = original; }, 1600);
-
     return;
-
   }
-
   showingThai = !showingThai;
-
   renderStage();
-
 }
- 
+
 async function rate(delta){
-
   const cat = activeCategory();
-
   const period = periodForCategory(cat);
-
   if (!current.item || !state[cat][period][current.item]) return;
-
   state[cat][period][current.item].score += delta;
-
   await saveState(cat);
-
   const badge = document.getElementById('timeBadge');
-
   const original = badge.textContent;
-
   badge.textContent = delta > 0 ? "Got it — showing this more often" : "Got it — showing this less often";
-
   setTimeout(() => { badge.textContent = original; }, 1400);
-
 }
- 
+
 function renderSetup(){
-
   const zone = document.getElementById('setupZone');
-
   zone.innerHTML = '';
-
   if (!editMode) return;
- 
+
   const cat = activeCategory();
-
   Object.keys(DEFAULTS[cat].items).forEach(period => {
-
     const title = document.createElement('div');
-
     title.className = 'section-title';
-
     title.textContent = cat === 'eat' ? capitalize(period) + ' options' : 'Your options';
-
     zone.appendChild(title);
- 
+
     const grid = document.createElement('div');
-
     grid.className = 'chip-grid';
-
     const pool = state[cat][period];
-
     Object.keys(pool).forEach(name => {
-
       const chip = document.createElement('div');
-
       chip.className = 'chip' + (pool[name].on ? ' on' : '');
-
       chip.textContent = name;
-
       chip.onclick = async () => {
-
         pool[name].on = !pool[name].on;
-
         await saveState(cat);
-
         renderSetup();
-
         renderStage();
-
       };
-
       grid.appendChild(chip);
-
     });
-
     zone.appendChild(grid);
- 
+
     const addRow = document.createElement('div');
-
     addRow.className = 'add-row';
-
     addRow.innerHTML = '<input type="text" placeholder="Add your own..."><button>Add</button>';
-
     const input = addRow.querySelector('input');
-
     const btn = addRow.querySelector('button');
-
     const addItem = async () => {
-
       const val = input.value.trim();
-
       if (!val) return;
-
       pool[val] = { on:true, score:0 };
-
       input.value = '';
-
       await saveState(cat);
-
       renderSetup();
-
       renderStage();
-
     };
-
     btn.onclick = addItem;
-
     input.onkeydown = (e) => { if (e.key === 'Enter') addItem(); };
-
     zone.appendChild(addRow);
-
   });
-
 }
- 
+
 function capitalize(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
- 
+
 function render(){
-
   renderTabs();
-
   renderTimeBadge();
-
   renderStage();
-
   renderSetup();
-
 }
- 
+
 document.getElementById('editToggle').onclick = () => {
-
   editMode = !editMode;
-
   document.getElementById('editToggle').textContent = editMode ? 'Done editing' : 'Edit my options';
-
   renderSetup();
-
 };
- 
+
 (async () => {
-
-  await loadState();
-
+  try{
+    await loadState();
+  }catch(e){
+    console.error('loadState failed, falling back to in-memory defaults', e);
+    // Build state from DEFAULTS directly so the UI still renders without storage.
+    for (const cat of Object.keys(DEFAULTS)){
+      const merged = {};
+      for (const period of Object.keys(DEFAULTS[cat].items)){
+        merged[period] = {};
+        DEFAULTS[cat].items[period].forEach(name => {
+          merged[period][name] = { on:true, score:0 };
+        });
+      }
+      state[cat] = merged;
+    }
+  }
   current.category = 'eat';
-
   render();
-
 })();
 </script>
 </body>
 </html>
- 
